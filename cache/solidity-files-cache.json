@@ -219,6 +219,41 @@
       "artifacts": [
         "Address"
       ]
+    },
+    "C:\\Users\\lukey\\Documents\\Blockchain\\Utils\\contracts\\payments\\Fees.sol": {
+      "lastModificationDate": 1654335104913,
+      "contentHash": "4a4e46b5c8b4192c98e30db29c16977c",
+      "sourceName": "contracts/payments/Fees.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.14"
+      ],
+      "artifacts": [
+        "Fees"
+      ]
     }
   }
 }
