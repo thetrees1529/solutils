@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "solutils",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@openzeppelin/contracts": "^4.6.0",
     "hardhat": "^2.9.7"
   }
