@@ -18,6 +18,7 @@ contract ERC20Payments {
         _token = token;
     }
     function _setPayees(Payee[] calldata payees) internal {
+        if(_payees.length > 0) _deletePayees();
         for(uint i; i < payees.length; i++) {
             Payee calldata payee = payees[i];
             require(payee.weighting > 0, "All payees must have a weighting.");
