@@ -9,7 +9,7 @@ contract ERC20Payments {
         address addr;
         uint weighting;
     }
-    event PayeeAdded(Payee payee);
+    event PayeesSet(Payee[] payees);
     event PayeesDeleted();
     Payee[] private _payees;
     uint private _totalWeighting;
@@ -17,12 +17,15 @@ contract ERC20Payments {
     constructor(IERC20 token) {
         _token = token;
     }
-    function _addPayee(Payee calldata payee) internal {
-        require(payee.weighting > 0, "All payees must have a weighting.");
-        require(payee.addr != address(0), "Payee cannot be the zero address.");
-        _totalWeighting += payee.weighting;
-        _payees.push(payee);
-        emit PayeeAdded(payee);
+    function _setPayees(Payee[] calldata payees) internal {
+        for(uint i; i < payees.length; i++) {
+            Payee calldata payee = payees[i];
+            require(payee.weighting > 0, "All payees must have a weighting.");
+            require(payee.addr != address(0), "Payee cannot be the zero address.");
+            _totalWeighting += payee.weighting;
+            _payees.push(payee);
+        }
+        emit PayeesSet(payees);
     }
     function _makePayment(uint value) internal returns(bool success) {
         if(_payees.length == 0) return false;
