@@ -17,6 +17,9 @@ contract ERC20Payments {
     constructor(IERC20 token) {
         _token = token;
     }
+    function getPayees() external view returns(Payee[] memory) {
+        return _payees;
+    }
     function _setPayees(Payee[] calldata payees) internal {
         if(_payees.length > 0) _deletePayees();
         for(uint i; i < payees.length; i++) {
