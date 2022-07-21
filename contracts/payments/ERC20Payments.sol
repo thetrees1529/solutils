@@ -31,13 +31,17 @@ contract ERC20Payments {
         }
         emit PayeesSet(payees);
     }
-    function _makePayment(uint value) internal returns(bool success) {
+    function _tryMakePayment(uint value) internal returns(bool success) {
         if(_payees.length == 0) return false;
         for(uint i; i < _payees.length; i ++) {
             Payee storage payee = _payees[i];
             uint payment = (payee.weighting * value) / _totalWeighting;
             _token.safeTransfer(payee.addr, payment);
         }
+    }
+    function _makePayment(uint value) internal {
+        bool success = _tryMakePayment(value);
+        require(success);
     }
     function _deletePayees() internal {
         delete _totalWeighting;
