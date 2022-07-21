@@ -41,7 +41,7 @@ contract ERC20Payments {
     }
     function _makePayment(uint value) internal {
         bool success = _tryMakePayment(value);
-        require(success);
+        require(success, "No payees set up.");
     }
     function _deletePayees() internal {
         delete _totalWeighting;
