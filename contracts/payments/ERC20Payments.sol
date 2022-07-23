@@ -38,6 +38,7 @@ contract ERC20Payments {
             uint payment = (payee.weighting * value) / _totalWeighting;
             _token.safeTransfer(payee.addr, payment);
         }
+        return true;
     }
     function _makePayment(uint value) internal {
         bool success = _tryMakePayment(value);
