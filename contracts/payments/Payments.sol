@@ -8,10 +8,10 @@ contract Payments is Shared {
     function getPayees() external view returns(Payee[] memory) {
         return _payees;
     }
-    function _setPayees(Payee[] calldata payees) internal {
+    function _setPayees(Payee[] memory payees) internal {
         if(_payees.length > 0) _deletePayees();
         for(uint i; i < payees.length; i++) {
-            Payee calldata payee = payees[i];
+            Payee memory payee = payees[i];
             require(payee.weighting > 0, "All payees must have a weighting.");
             require(payee.addr != address(0), "Payee cannot be the zero address.");
             _totalWeighting += payee.weighting;

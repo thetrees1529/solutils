@@ -2,15 +2,11 @@
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "./Shared.sol";
 
-contract ERC20Payments {
+contract ERC20Payments is Shared {
     using SafeERC20 for IERC20;
-    struct Payee {
-        address addr;
-        uint weighting;
-    }
-    event PayeesSet(Payee[] payees);
-    event PayeesDeleted();
+
     Payee[] private _payees;
     uint private _totalWeighting;
     IERC20 private _token;
@@ -20,10 +16,10 @@ contract ERC20Payments {
     function getPayees() external view returns(Payee[] memory) {
         return _payees;
     }
-    function _setPayees(Payee[] calldata payees) internal {
+    function _setPayees(Payee[] memory payees) internal {
         if(_payees.length > 0) _deletePayees();
         for(uint i; i < payees.length; i++) {
-            Payee calldata payee = payees[i];
+            Payee memory payee = payees[i];
             require(payee.weighting > 0, "All payees must have a weighting.");
             require(payee.addr != address(0), "Payee cannot be the zero address.");
             _totalWeighting += payee.weighting;
