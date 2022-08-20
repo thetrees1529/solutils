@@ -1,14 +1,8 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-contract Payments {
-    struct Payee {
-        address addr;
-        uint weighting;
-    }
-    event PayeesSet(Payee[] payees);
-    event PayeesDeleted();
+import "./Shared.sol";
+contract Payments is Shared {
     Payee[] private _payees;
     uint private _totalWeighting;
     function getPayees() external view returns(Payee[] memory) {
