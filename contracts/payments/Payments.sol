@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ERC20Payments {
+contract Payments {
     struct Payee {
         address addr;
         uint weighting;
