@@ -9,9 +9,7 @@ contract Payments {
     event PayeesDeleted();
     Payee[] private _payees;
     uint private _totalWeighting;
-    constructor() {
-        Payee[] memory payees = new Payee[](1);
-        payees[0] = Payee(msg.sender,1);
+    constructor(Payee[] memory payees) {
         _setPayees(payees);
     }
     function getPayees() external virtual view returns(Payee[] memory) {

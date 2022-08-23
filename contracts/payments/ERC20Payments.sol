@@ -14,10 +14,8 @@ contract ERC20Payments {
     Payee[] private _payees;
     uint private _totalWeighting;
     IERC20 private _token;
-    constructor(IERC20 token) {
+    constructor(IERC20 token, Payee[] memory payees) {
         _token = token;
-        Payee[] memory payees = new Payee[](1);
-        payees[0] = Payee(msg.sender,1);
         _setPayees(payees);
     }
     function getPayees() external view returns(Payee[] memory) {
