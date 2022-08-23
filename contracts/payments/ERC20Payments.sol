@@ -1,17 +1,24 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "./Shared.sol";
 
-contract ERC20Payments is Shared {
+contract ERC20Payments {
     using SafeERC20 for IERC20;
+    struct Payee {
+        address addr;
+        uint weighting;
+    }
+    event PayeesSet(Payee[] payees);
+    event PayeesDeleted();
 
     Payee[] private _payees;
     uint private _totalWeighting;
     IERC20 private _token;
     constructor(IERC20 token) {
         _token = token;
+        Payee[] memory payees = new Payee[](1);
+        payees[0] = Payee(msg.sender,1);
+        _setPayees(payees);
     }
     function getPayees() external view returns(Payee[] memory) {
         return _payees;
