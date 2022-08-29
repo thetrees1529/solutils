@@ -9,9 +9,6 @@ contract Payments {
     event PayeesDeleted();
     Payee[] private _payees;
     uint private _totalWeighting;
-    constructor(Payee[] memory payees) {
-        _setPayees(payees);
-    }
     function getPayees() external virtual view returns(Payee[] memory) {
         return _payees;
     }
