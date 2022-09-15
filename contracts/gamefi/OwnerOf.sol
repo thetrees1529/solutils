@@ -9,12 +9,12 @@ contract OwnerOf {
         _token = token;
     }
     
-    function isOwnerOf(address account, uint tokenId) internal view returns(bool) {
+    function _isOwnerOf(address account, uint tokenId) internal view returns(bool) {
         return _token.ownerOf(tokenId) == account;
     }
 
     modifier onlyOwnerOf(uint tokenId) {
-        require(isOwnerOf(msg.sender, tokenId), "Does not own nft.");
+        require(_isOwnerOf(msg.sender, tokenId), "Does not own nft.");
         _;
     }
 
