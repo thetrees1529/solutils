@@ -9,7 +9,7 @@ contract OwnerOf {
         _token = token;
     }
     
-    function isOwnerOf(address account, uint tokenId) private view returns(bool) {
+    function isOwnerOf(address account, uint tokenId) internal view returns(bool) {
         return _token.ownerOf(tokenId) == account;
     }
 
