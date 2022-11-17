@@ -11,7 +11,7 @@ library ERC20Payments {
         uint weighting;
     }
 
-    function split(address token, uint value, Payee[] memory payees) internal {
+    function split(IERC20 token, uint value, Payee[] memory payees) internal {
         uint totalWeighting;
         for(uint i; i < payees.length; i ++) {
             totalWeighting += payees[i].weighting;
@@ -19,7 +19,7 @@ library ERC20Payments {
         for(uint i; i < payees.length; i ++) {
             Payee memory payee = payees[i];
             uint payment = (payee.weighting * value) / totalWeighting;
-            IERC20(token).safeTransfer(payee.addr, payment);
+            token.safeTransfer(payee.addr, payment);
         }
     }
 
