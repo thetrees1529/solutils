@@ -1,20 +1,14 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-contract OwnerOf {
-
-    IERC721 private _token;
-
-    constructor(IERC721 token) {
-        _token = token;
-    }
+library OwnerOf {
     
-    function _isOwnerOf(address account, uint tokenId) internal view returns(bool) {
-        return _token.ownerOf(tokenId) == account;
+    function isOwnerOf(IERC721 token, address account, uint tokenId) internal view returns(bool) {
+        return token.ownerOf(tokenId) == account;
     }
 
-    modifier onlyOwnerOf(uint tokenId) {
-        require(_isOwnerOf(msg.sender, tokenId), "Does not own nft.");
+    modifier onlyOwnerOf(IERC721 token, uint tokenId) {
+        require(isOwnerOf(token, msg.sender, tokenId), "Does not own nft.");
         _;
     }
 
