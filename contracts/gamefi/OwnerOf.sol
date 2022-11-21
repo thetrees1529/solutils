@@ -7,9 +7,4 @@ library OwnerOf {
         return token.ownerOf(tokenId) == account;
     }
 
-    modifier onlyOwnerOf(IERC721 token, uint tokenId) {
-        require(isOwnerOf(token, msg.sender, tokenId), "Does not own nft.");
-        _;
-    }
-
 }
