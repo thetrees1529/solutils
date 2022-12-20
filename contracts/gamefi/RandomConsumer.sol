@@ -7,12 +7,12 @@ abstract contract RandomConsumer {
     constructor(Random random_) {
         random = random_;
     }
-    function _requestRandom(Fees.Fee[] calldata chances) internal returns(uint) {
-        return random.requestRandom(chances);
-    }
-    function rawFulFillRandom(uint requestId, bool[] calldata results) external {
+    function rawFulFillRandom(uint requestId, uint result) external {
         require(msg.sender == address(random), "Not allowed.");
-        _fulfillRandom(requestId, results);
+        _fulfillRandom(requestId, result);
     }
-    function _fulfillRandom(uint requestId, bool[] calldata results) internal virtual;
+    function _requestRandom(uint[] memory options) internal returns(uint) {
+        return random.requestRandom(options);
+    }
+    function _fulfillRandom(uint requestId, uint result) internal virtual;
 }

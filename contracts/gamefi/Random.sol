@@ -22,35 +22,40 @@ contract Random is VRFConsumerBaseV2, AccessControl {
     struct Request {
         uint requestId;
         RandomConsumer from;
-        Fees.Fee[] chances;
+        uint[] options;
+        uint total;
     }
-
     mapping(uint => Request) private _requests;
-    function requestRandom(Fees.Fee[] calldata chances) external onlyRole(CONSUMER_ROLE) returns(uint requestId) {
+
+    function requestRandom(uint[] calldata options) external onlyRole(CONSUMER_ROLE) returns(uint requestId) {
         requestId = _nextRequestId.current();
+        _nextRequestId.increment();
+        uint total;
+        for(uint i; i < options.length; i ++) total += options[i];
+        require(total > 0, "Must have at least 1 weighting.");
         _requests[vrfCoordinator.requestRandomWords(keyHash, subId, minimumRequestConfirmations, callbackGasLimit, numWords)] = Request({
             requestId: requestId,
             from: RandomConsumer(msg.sender),
-            chances: chances
+            options: options,
+            total: total
         });
-        _nextRequestId.increment();
     }
     function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override {
         Request storage request = _requests[requestId];
         uint word = randomWords[0];
-        Fees.Fee[] storage chances = request.chances;
-        uint len = chances.length;
-        bool[] memory results = new bool[](len);
+        uint[] storage options = request.options;
+        uint len = options.length;
+        uint total = request.total;
         for(uint i; i < len; i ++) {
-            Fees.Fee storage chance = chances[i];
-            results[i] = word % chance.denominator < chance.numerator;
-            word = _newWord(word);
+            uint option = options[i];
+            uint r = word % total;
+            if(r < option) return request.from.rawFulFillRandom(request.requestId, i); 
+            total -= option;
+            word = uint(sha256(abi.encode(word)));
         }
-        request.from.rawFulFillRandom(request.requestId, results);
     }
-    function _newWord(uint word) private pure returns(uint) {
-        return uint(sha256(abi.encode(word)));
-    }
+
+
 
 }
 
