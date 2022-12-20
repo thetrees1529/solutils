@@ -27,10 +27,6 @@ library ERC20Payments {
         }
     }
 
-    function withdraw(IERC20 token) internal {
-        _send(token, address(this), msg.sender, token.balanceOf(address(this)));
-    }
-
     function _send(IERC20 token, address from, address to, uint value) private {
         if(from == address(this)) token.safeTransfer(to,value);
         else token.safeTransferFrom(from, to, value);
