@@ -4,7 +4,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import {RandomConsumer} from "./RandomConsumer.sol";
+import {IRandomConsumer} from "./IRandomConsumer.sol";
 contract Random is VRFConsumerBaseV2, AccessControl {
     using Counters for Counters.Counter;
     Counters.Counter private _nextRequestId;

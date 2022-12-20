@@ -2,9 +2,7 @@
 pragma solidity ^0.8.0;
 import "./Random.sol";
 import "../payments/Fees.sol";
-interface IRandomConsumer {
-    function rawFulFillRandom(uint requestId, uint result) external;
-}
+import "./IRandomConsumer.sol";
 abstract contract RandomConsumer is IRandomConsumer {
     Random public random;
     constructor(Random random_) {
