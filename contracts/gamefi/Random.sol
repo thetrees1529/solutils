@@ -4,10 +4,9 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "./RandomConsumer.sol";
+import {IRandomConsumer} from "./RandomConsumer.sol";
 contract Random is VRFConsumerBaseV2, AccessControl {
     using Counters for Counters.Counter;
-    using Fees for uint;
     Counters.Counter private _nextRequestId;
     uint32 public constant numWords = 1;
     bytes32 public constant CONSUMER_ROLE = keccak256("CONSUMER_ROLE");
