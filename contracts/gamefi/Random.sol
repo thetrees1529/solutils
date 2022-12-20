@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
-import "../payments/Fees.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./RandomConsumer.sol";
@@ -21,7 +20,7 @@ contract Random is VRFConsumerBaseV2, AccessControl {
     VRFCoordinatorV2Interface public vrfCoordinator;
     struct Request {
         uint requestId;
-        RandomConsumer from;
+        IRandomConsumer from;
         uint[] options;
         uint total;
     }
@@ -35,7 +34,7 @@ contract Random is VRFConsumerBaseV2, AccessControl {
         require(total > 0, "Must have at least 1 weighting.");
         _requests[vrfCoordinator.requestRandomWords(keyHash, subId, minimumRequestConfirmations, callbackGasLimit, numWords)] = Request({
             requestId: requestId,
-            from: RandomConsumer(msg.sender),
+            from: IRandomConsumer(msg.sender),
             options: options,
             total: total
         });
