@@ -20,6 +20,7 @@ library ERC20Payments {
         for(uint i; i < payees.length; i ++) {
             totalWeighting += payees[i].weighting;
         }
+        require(totalWeighting > 0, "ERC20Payments: must have at least 1 weighting.");
         for(uint i; i < payees.length; i ++) {
             Payee memory payee = payees[i];
             uint payment = (payee.weighting * value) / totalWeighting;
