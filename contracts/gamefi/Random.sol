@@ -10,10 +10,16 @@ contract Random is VRFConsumerBaseV2, AccessControl {
     Counters.Counter private _nextRequestId;
     uint32 public constant numWords = 1;
     bytes32 public constant CONSUMER_ROLE = keccak256("CONSUMER_ROLE");
-    bytes32 public keyHash;uint64 public subId;uint16 public minimumRequestConfirmations;uint32 public callbackGasLimit;
-    constructor(VRFCoordinatorV2Interface vrfCoordinator_, bytes32 keyHash_,uint64 subId_,uint16 minimumRequestConfirmations_,uint32 callbackGasLimit_) VRFConsumerBaseV2(address(vrfCoordinator)) {
+    struct VrfConfig {
+        bytes32 keyHash;
+        uint64 subId;
+        uint16 minimumRequestConfirmations;
+        uint32 callbackGasLimit;
+    }
+    VrfConfig public vrfConfig;
+    constructor(VRFCoordinatorV2Interface vrfCoordinator_, VrfConfig memory vrfConfig_) VRFConsumerBaseV2(address(vrfCoordinator)) {
         vrfCoordinator = vrfCoordinator_;
-        (keyHash, subId, minimumRequestConfirmations, callbackGasLimit) = (keyHash_, subId_, minimumRequestConfirmations_, callbackGasLimit_);
+        vrfConfig = vrfConfig_;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
     VRFCoordinatorV2Interface public vrfCoordinator;
@@ -31,7 +37,7 @@ contract Random is VRFConsumerBaseV2, AccessControl {
         uint total;
         for(uint i; i < options.length; i ++) total += options[i];
         require(total > 0, "Must have at least 1 weighting.");
-        _requests[vrfCoordinator.requestRandomWords(keyHash, subId, minimumRequestConfirmations, callbackGasLimit, numWords)] = Request({
+        _requests[vrfCoordinator.requestRandomWords(vrfConfig.keyHash, vrfConfig.subId, vrfConfig.minimumRequestConfirmations, vrfConfig.callbackGasLimit, numWords)] = Request({
             requestId: requestId,
             from: IRandomConsumer(msg.sender),
             options: options,
