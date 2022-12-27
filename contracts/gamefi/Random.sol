@@ -1,11 +1,11 @@
 //SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.0;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
+import "./IRandom.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import {IRandomConsumer} from "./IRandomConsumer.sol";
-contract Random is VRFConsumerBaseV2, AccessControl {
+contract Random is IRandom, VRFConsumerBaseV2, AccessControl {
     using Counters for Counters.Counter;
     Counters.Counter private _nextRequestId;
     uint32 public constant numWords = 1;
