@@ -17,7 +17,7 @@ contract Random is IRandom, VRFConsumerBaseV2, AccessControl {
         uint32 callbackGasLimit;
     }
     VrfConfig public vrfConfig;
-    constructor(VRFCoordinatorV2Interface vrfCoordinator_, VrfConfig memory vrfConfig_) VRFConsumerBaseV2(address(vrfCoordinator)) {
+    constructor(VRFCoordinatorV2Interface vrfCoordinator_, VrfConfig memory vrfConfig_) VRFConsumerBaseV2(address(vrfCoordinator_)) {
         vrfCoordinator = vrfCoordinator_;
         vrfConfig = vrfConfig_;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
