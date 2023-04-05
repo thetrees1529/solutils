@@ -2,11 +2,7 @@
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
-
-interface IPayee is IERC165 {
-    function onPaymentReceived(IERC20 token, address from, uint value) external returns (bool);
-}
-
+import "./IPayee.sol";
 library ERC20Payments {
 
     using SafeERC20 for IERC20;
