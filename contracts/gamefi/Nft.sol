@@ -9,7 +9,6 @@ abstract contract Nft is AccessControl, ERC721Enumerable {
     string private baseUri;
 
     constructor(string memory uri) {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setBaseURI(uri);
     }
 

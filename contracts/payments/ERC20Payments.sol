@@ -1,7 +1,8 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
+import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+import "./IPayee.sol";
 library ERC20Payments {
 
     using SafeERC20 for IERC20;
@@ -31,6 +32,9 @@ library ERC20Payments {
     function _send(IERC20 token, address from, address to, uint value) private {
         if(from == address(this)) token.safeTransfer(to,value);
         else token.safeTransferFrom(from, to, value);
+        if(ERC165Checker.supportsInterface(to, type(IPayee).interfaceId)) {
+            require(IPayee(to).onPaymentReceived(token, from, value), "ERC20Payments: payee rejected payment.");
+        }
     }
 
 }
