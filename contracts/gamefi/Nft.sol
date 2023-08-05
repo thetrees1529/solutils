@@ -7,8 +7,10 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 abstract contract Nft is AccessControl, ERC721Enumerable {
 
     string private baseUri;
+    uint private _nextTokenId;
 
     constructor(string memory uri) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setBaseURI(uri);
     }
 
@@ -16,7 +18,16 @@ abstract contract Nft is AccessControl, ERC721Enumerable {
         return super.supportsInterface(interfaceId);
     }
 
-    function setBaseURI(string memory _newUri) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function mint(address to, uint numberOf) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint tokenId = _nextTokenId;
+        _nextTokenId += numberOf;
+        for(uint i; i < numberOf; i ++){
+            _mint(to, tokenId);
+            tokenId ++;
+        }
+    }
+
+    function setBaseURI(string memory _newUri) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _setBaseURI(_newUri);
     }
 
