@@ -27,6 +27,12 @@ abstract contract Nft is AccessControl, ERC721Enumerable {
         }
     }
 
+    function burn(uint[] calldata tokenIds) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        for(uint i; i < tokenIds.length; i ++) {
+            _burn(tokenIds[i]);
+        }
+    }
+
     function setBaseURI(string memory _newUri) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _setBaseURI(_newUri);
     }
