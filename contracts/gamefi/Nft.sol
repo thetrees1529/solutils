@@ -22,11 +22,13 @@ contract Nft is AccessControl, ERC721Enumerable {
         return super.supportsInterface(interfaceId);
     }
 
-    function mint(address to, uint numberOf) external onlyRole(MINTER_ROLE) {
+    function mint(address to, uint numberOf) external onlyRole(MINTER_ROLE) returns(uint[] memory tokenIds){
+        tokenIds = new uint[](numberOf);
         uint tokenId = _nextTokenId;
         _nextTokenId += numberOf;
         for(uint i; i < numberOf; i ++){
             _mint(to, tokenId);
+            tokenIds[i] = tokenId;
             tokenId ++;
         }
     }
