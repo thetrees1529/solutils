@@ -10,6 +10,7 @@ contract Nft is AccessControl, ERC721Enumerable {
     uint private _nextTokenId;
 
     constructor(string memory uri, string memory name, string memory symbol) ERC721(name, symbol) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setBaseURI(uri);
     }
 
