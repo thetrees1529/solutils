@@ -35,7 +35,7 @@ contract Nft is AccessControl, ERC721Enumerable {
         }
     }
 
-    function burn(uint tokenId) external onlyRole(BURNER_ROLE) {
+    function burn(uint tokenId) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _burn(tokenId);
     }
 
