@@ -25,6 +25,14 @@ contract Nft is AccessControl, ERC721Enumerable {
         }
     }
 
+    function tokensOf(address owner) external view returns(uint[] memory tokenIds) {
+        uint balance = balanceOf(owner);
+        tokenIds = new uint[](balance);
+        for(uint i; i < balance; i ++) {
+            tokenIds[i] = tokenOfOwnerByIndex(owner, i);
+        }
+    }
+
     function mint(address to, uint numberOf) external onlyRole(DEFAULT_ADMIN_ROLE) returns(uint[] memory tokenIds){
         tokenIds = new uint[](numberOf);
         uint tokenId = _nextTokenId;
