@@ -18,6 +18,13 @@ contract Nft is AccessControl, ERC721Enumerable {
         return super.supportsInterface(interfaceId);
     }
 
+    function ownersOf(uint[] calldata tokenIds) external view returns(address[] memory owners) {
+        owners = new address[](tokenIds.length);
+        for(uint i; i < tokenIds.length; i ++) {
+            owners[i] = ownerOf(tokenIds[i]);
+        }
+    }
+
     function mint(address to, uint numberOf) external onlyRole(DEFAULT_ADMIN_ROLE) returns(uint[] memory tokenIds){
         tokenIds = new uint[](numberOf);
         uint tokenId = _nextTokenId;
