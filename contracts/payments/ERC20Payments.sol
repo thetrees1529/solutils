@@ -25,15 +25,15 @@ library ERC20Payments {
         for(uint i; i < payees.length; i ++) {
             Payee memory payee = payees[i];
             uint payment = (payee.weighting * value) / totalWeighting;
-            _sendFrom(token,from, payee.addr, payment);
+            sendFrom(token,from, payee.addr, payment);
         }
     }
 
-    function _send(IERC20 token, address to, uint value) private {
-        _sendFrom(token, address(this), to, value);
+    function send(IERC20 token, address to, uint value) private {
+        sendFrom(token, address(this), to, value);
     }
 
-    function _sendFrom(IERC20 token, address from, address to, uint value) private {
+    function sendFrom(IERC20 token, address from, address to, uint value) internal {
         if(from == address(this)) token.safeTransfer(to,value);
         else token.safeTransferFrom(from, to, value);
         if(ERC165Checker.supportsInterface(to, type(IPayee).interfaceId)) {
