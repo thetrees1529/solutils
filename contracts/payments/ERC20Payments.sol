@@ -29,7 +29,7 @@ library ERC20Payments {
         }
     }
 
-    function send(IERC20 token, address to, uint value) private {
+    function send(IERC20 token, address to, uint value) internal {
         sendFrom(token, address(this), to, value);
     }
 
