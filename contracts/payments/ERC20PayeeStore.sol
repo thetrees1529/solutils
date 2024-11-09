@@ -1,17 +1,16 @@
 //SPDX-License-Identifier: Unlicenced
 pragma solidity ^0.8.0;
 import "./ERC20Payments.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ERC20PayeeStore is Ownable {
+contract ERC20PayeeStore {
     ERC20Payments.Payee[] internal _payees;
+
+    constructor(ERC20Payments.Payee[] memory payees) {
+        _setPayees(payees);
+    }
 
     function getPayees() public view returns (ERC20Payments.Payee[] memory) {
         return _payees;
-    }
-
-    function setPayees(ERC20Payments.Payee[] calldata payees) public onlyOwner {
-        _setPayees(payees);
     }
 
     function _setPayees(ERC20Payments.Payee[] memory payees) internal {
