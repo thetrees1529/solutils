@@ -4,7 +4,7 @@ import "./ERC20Payments.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC20PayeeStore is Ownable {
-    ERC20Payments.Payee[] private _payees;
+    ERC20Payments.Payee[] internal _payees;
 
     function getPayees() public view returns (ERC20Payments.Payee[] memory) {
         return _payees;
