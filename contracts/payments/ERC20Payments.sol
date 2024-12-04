@@ -37,7 +37,7 @@ library ERC20Payments {
         if(from == address(this)) token.safeTransfer(to,value);
         else token.safeTransferFrom(from, to, value);
         if(ERC165Checker.supportsInterface(to, type(IPayee).interfaceId)) {
-            require(IPayee(to).onPaymentReceived(token, from, value), "ERC20Payments: payee rejected payment.");
+            IPayee(to).onPaymentReceived(token, from, value);
         }
     }
 
